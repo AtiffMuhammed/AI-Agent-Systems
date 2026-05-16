@@ -1,0 +1,8 @@
+{
+  "workflow": [
+    "Analyze goal",
+    "Generate strategy",
+    "Execute tasks",
+    "Store results"
+  ]
+}
