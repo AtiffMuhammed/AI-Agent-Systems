@@ -1,45 +1,65 @@
 # 🚀 AI Agent Systems
 
-Building real-world AI automation systems, multi-agent workflows, and intelligent content pipelines.
+Building modular AI automation systems, multi-agent workflows, memory engines, and intelligent content pipelines.
 
-## 👋 About Me
-I’m Athif — a 16-year-old builder focused on AI agents, automation systems, Python development, and IoT + AI integration.
+## 👋 About
+I’m Athif — a 16-year-old builder focused on:
+- AI Agents
+- Automation Systems
+- Python Development
+- AI Workflow Architecture
+- IoT + AI Integration
 
-## 🤖 Featured Project
-### AI Avatar News Automation Agent
+---
 
-An advanced AI workflow that transforms news into short-form avatar videos.
+# 🧠 Core Systems
 
-Workflow:
-News Scraping → AI Script Writer → Viral Hook → SEO Title → Avatar Video Generation → Output Pipeline
+## 🤖 AI Avatar News Automation Agent
+Transforms news into AI-generated short-form avatar videos.
 
-### Features
-- Automated news collection
-- AI-generated scripts
-- Viral hook generation
-- SEO-optimized titles
-- AI avatar video generation
-- Polling system for video status tracking
+## ⚙️ Multi-Agent Orchestrator
+Coordinates autonomous task execution pipelines.
 
-### Stack
+## 🧠 Autonomous Memory Engine
+Stores and retrieves contextual workflow memory.
+
+## 🚀 Content Pipeline Engine
+Processes metadata, SEO optimization, and content packaging.
+
+---
+
+# 🏗️ Architecture Philosophy
+
+This repository focuses on:
+- Agent collaboration
+- Workflow orchestration
+- Persistent memory systems
+- Scalable automation pipelines
+- Modular AI architecture
+
+---
+
+# ⚡ Tech Stack
 - Python
 - n8n
 - OpenRouter
 - HeyGen API
-- AI Workflow Automation
+- Workflow Automation
+- AI Content Pipelines
 
-## 🧪 Current Focus
-- Multi-agent AI systems
-- Workflow automation
-- AI-powered content systems
-- Scalable AI pipelines
+---
 
-## 📈 Future Plans
-- YouTube automation agents
-- Multi-platform publishing systems
-- AI business automation
+# 📈 Future Expansion
+- Vector databases
+- Autonomous planning systems
+- Multi-platform publishing
+- Distributed AI workflows
+- Agent-to-agent communication
 
-## 🔥 Philosophy
+---
+
+# 🔥 Philosophy
+
 Building systems, not scripts.
 
 Self-discipline over motivation.
