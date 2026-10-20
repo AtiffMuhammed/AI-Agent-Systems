@@ -54,7 +54,7 @@ def chunks(text, lines=28, overlap=4):
 class Store:
     def __init__(self, path):
         self.path = Path(path).expanduser().resolve()
-        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self.path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
         with self.connect() as db:
             db.execute('PRAGMA journal_mode=WAL')
             db.executescript('''
@@ -76,6 +76,7 @@ class Store:
     @contextmanager
     def connect(self):
         db = sqlite3.connect(self.path, timeout=10)
+        self.path.chmod(0o600)
         db.row_factory = sqlite3.Row
         db.execute('PRAGMA foreign_keys=ON')
         try:

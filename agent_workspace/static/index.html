@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A local workspace for project notes, cited answers, and real next steps.">
+  <title>AI Agent Systems · Project workspace</title>
+  <link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to workspace</a>
+<header class="masthead"><a class="brand" href="/"><span class="mark" aria-hidden="true">a.</span><span>AI Agent Systems<small>PROJECT WORKSPACE / V3.0</small></span></a><span class="local-badge">● Local workspace</span></header>
+<div class="layout">
+  <aside class="sidebar" aria-label="Project and sources">
+    <label class="eyebrow" for="project">YOUR PROJECT</label><select id="project" aria-label="Current project"></select>
+    <form id="project-form" class="inline-form"><input id="project-name" aria-label="New project name" placeholder="New project name" maxlength="80" required><button type="submit" class="subtle">Create</button></form>
+    <div class="section-head"><h2>Sources</h2><span id="source-count" class="count">0</span></div>
+    <label class="upload"><span class="upload-symbol" aria-hidden="true">＋</span><strong>Import project files</strong><span>Notes, Markdown, code, JSON<br>UTF-8 text · up to 1 MB per file</span><input id="files" type="file" multiple accept=".md,.txt,.py,.js,.ts,.tsx,.jsx,.json,.csv,.yaml,.yml,.ino,.rst,.html,.css" aria-label="Import project files"></label>
+    <p class="fine-print">A matching filename updates its existing source. Review files for secrets before importing.</p>
+    <ul id="sources" class="source-list"></ul>
+    <div class="sample-box"><span class="eyebrow">START WITHOUT SETUP</span><p>Explore a fictional ESP32 project with notes and a test plan.</p><button id="sample" class="subtle">Try sample project ↗</button></div>
+    <p class="sidebar-note">Your sources, reports, and tasks stay in this local database. Cloud synthesis is optional.</p>
+  </aside>
+  <main id="main">
+    <div class="intro"><span class="eyebrow">PROJECT MEMORY, MADE USEFUL</span><h1>Your project.<br><em>With receipts.</em></h1><p>Find the decision. Check the source. Choose the next step.</p></div>
+    <div id="notice" role="status" aria-live="polite"></div>
+    <nav class="tabs" role="tablist" aria-label="Workspace views">
+      <button type="button" id="ask-tab" role="tab" aria-controls="ask-panel" aria-selected="true">Ask your project</button>
+      <button type="button" id="tasks-tab" role="tab" aria-controls="tasks-panel" aria-selected="false" tabindex="-1">Task board</button>
+      <button type="button" id="history-tab" role="tab" aria-controls="history-panel" aria-selected="false" tabindex="-1">Saved reports</button>
+    </nav>
+    <section id="ask-panel" role="tabpanel" aria-labelledby="ask-tab">
+      <form id="ask-form" class="question-box">
+        <label for="question">What do you need to know?</label>
+        <textarea id="question" rows="3" maxlength="2000" required placeholder="How often does the sensor send readings? What still needs testing?"></textarea>
+        <div class="question-actions"><div><label class="eyebrow" for="provider">ANSWER MODE</label><select id="provider" aria-describedby="mode-help"></select></div><button type="submit" id="ask-button" class="primary">Find an answer <span aria-hidden="true">→</span></button></div>
+        <p id="mode-help" class="fine-print">Evidence mode returns matching excerpts. It works without an API key or a model.</p>
+        <label id="cloud-consent" class="consent" hidden><input id="allow-cloud" type="checkbox">Send this question and selected source passages to OpenRouter for this answer.</label>
+      </form>
+      <div id="empty" class="empty-state"><span aria-hidden="true">↳</span><div><h2>A useful answer starts with your notes.</h2><p>Import a README, specification, test log, or decision record. Ask with specific project terms so the search can find evidence.</p></div></div>
+      <article id="report" hidden>
+        <div class="report-top"><div><span class="eyebrow">SAVED EVIDENCE REPORT</span><h2 id="report-title"></h2></div><span id="report-mode" class="pill"></span></div>
+        <p id="report-note" class="fine-print"></p><div id="warnings" role="alert"></div><div id="claims" class="claims"></div>
+        <div id="steps-wrap" hidden><h3>Suggested next steps</h3><p class="fine-print">Suggestions have not been executed. Add only the ones you intend to do.</p><ul id="steps" class="steps"></ul></div>
+        <div class="section-head"><h3>Check the evidence</h3><span id="evidence-count" class="count"></span></div><div id="evidence"></div>
+        <details class="trace"><summary>How this answer was produced</summary><ol id="trace"></ol></details>
+        <div class="export-row"><a id="export-md" class="button" download>Download Markdown</a><a id="export-json" class="text-link" download>Download JSON ↗</a></div>
+      </article>
+    </section>
+    <section id="tasks-panel" role="tabpanel" aria-labelledby="tasks-tab" hidden>
+      <div class="panel-heading"><h2>Next steps you control.</h2><p>Tasks move only when you update them. No pretend execution.</p></div>
+      <form id="task-form" class="inline-form task-entry"><input id="task-title" aria-label="New task title" placeholder="Add a concrete next step…" maxlength="300" required><button type="submit" class="primary">Add task</button></form>
+      <div class="board"><section><h3>To do <span id="todo-count" class="count">0</span></h3><ul id="todo" class="task-list"></ul></section><section><h3>In progress <span id="doing-count" class="count">0</span></h3><ul id="doing" class="task-list"></ul></section><section><h3>Done <span id="done-count" class="count">0</span></h3><ul id="done" class="task-list"></ul></section></div>
+    </section>
+    <section id="history-panel" role="tabpanel" aria-labelledby="history-tab" hidden>
+      <div class="panel-heading"><h2>Keep the reasoning.</h2><p>Each saved report includes its original evidence snapshots, even after a source changes.</p></div><ul id="history" class="history-list"></ul><button id="clear-history" class="danger">Delete report history</button><p class="fine-print">Deleting a source does not remove its quotes from old reports. Delete report history separately to remove those snapshots.</p>
+    </section>
+    <footer>Built for focused project work. <span>Lexical search · verifiable references · human decisions</span></footer>
+  </main>
+</div>
+<dialog id="document-dialog" aria-labelledby="document-name"><div class="section-head"><h2 id="document-name"></h2><button id="close-dialog" class="subtle" aria-label="Close source">Close ×</button></div><p id="document-meta" class="fine-print"></p><pre id="document-content"></pre></dialog>
+</body>
+</html>

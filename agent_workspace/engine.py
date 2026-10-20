@@ -46,6 +46,19 @@ def validate_output(data, sources):
     return verified,cleaned,False
 
 
+def evidence_steps(sources):
+    """Offer explicit TODOs from retrieved notes; never mark them executed."""
+    steps = []
+    for source in sources:
+        for line in source['body'].splitlines():
+            match = re.match(r'^\s*(?:[-*]\s+)?(?:TODO\s*:\s*|\[ \]\s+)(.+)',line,re.I)
+            if match:
+                title = match.group(1).strip()
+                if 0 < len(title) <= 300 and title not in steps:
+                    steps.append(title)
+    return steps[:5]
+
+
 def answer(store, project, question, provider='evidence', generator=None):
     question = clean_text(question,'Question',2000)
     if provider not in ('evidence','ollama','openrouter'):
@@ -61,6 +74,7 @@ def answer(store, project, question, provider='evidence', generator=None):
     status = 'no_evidence' if not sources else 'answered'
     if sources:
         claims = evidence_claims(question,sources)
+        steps = evidence_steps(sources)
         if provider != 'evidence':
             event('synthesize',f'Request structured claims from {provider}.')
             try:
@@ -71,7 +85,7 @@ def answer(store, project, question, provider='evidence', generator=None):
                 event('validate','All claim references point to retrieved sources; factual accuracy still needs review.')
             except (providers.ProviderError,ValueError) as error:
                 claims = evidence_claims(question,sources)
-                steps = []
+                steps = evidence_steps(sources)
                 warnings.append(str(error))
                 status = 'fallback'
                 event('fallback','Model output was unavailable or invalid. Returned actual source excerpts.')

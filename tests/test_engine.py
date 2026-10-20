@@ -67,6 +67,12 @@ class EngineTests(unittest.TestCase):
         self.assertEqual(result['status'],'insufficient_evidence')
         self.assertEqual(result['claims'],[])
 
+    def test_offline_mode_extracts_explicit_todos_but_does_not_execute_them(self):
+        self.store.import_document(self.project,'tests.md','TODO: Calibrate the sensor.\n- [ ] Measure battery voltage.')
+        result = answer(self.store,self.project,'calibrate sensor')['result']
+        self.assertIn('Calibrate the sensor.',result['next_steps'])
+        self.assertEqual(self.store.tasks(self.project),[])
+
     def test_model_prompt_uses_only_selected_project_evidence(self):
         other = self.store.create_project('Other')['id']
         self.store.import_document(other,'notes.md','SENSITIVE-UNRELATED temperature project')
