@@ -1,38 +1,14 @@
-# 🤖 Multi-Agent Orchestrator System
+# Task-planning simulator
 
-A modular AI orchestration framework that simulates how autonomous AI agents collaborate inside real-world automation systems.
+A small teaching example that separates a deterministic planner, simulated executor, process-local memory, and JSON logger.
 
-## 🧠 System Architecture
-
-Planner Agent → Executor Agent → Memory System → Logger Agent → Final Output
-
-## ⚙️ Features
-- Task orchestration
-- Modular agent architecture
-- Shared memory simulation
-- Execution logging
-- Workflow coordination
-- JSON output pipeline
-
-## 📁 Structure
-
-```text
-multi-agent-orchestrator/
- ├── main.py
- ├── planner_agent.py
- ├── executor_agent.py
- ├── memory_system.py
- ├── logger_agent.py
- ├── tasks.json
- └── output_log.json
+```bash
+python multi-agent-orchestrator/main.py "Review a workflow"
+python multi-agent-orchestrator/main.py "Review a workflow" --output /path/to/run.json
 ```
 
-## 🚀 Future Improvements
-- LLM integration
-- Autonomous retries
-- Multi-agent collaboration
-- Real API integrations
-- Distributed workflows
+The result contains `mode: "simulation"` and task status `simulated`. **No described task is actually performed.** The planner produces four fixed task labels; there is no LLM, tool invocation, scheduler, or autonomous execution.
 
-## 🎯 Purpose
-This project demonstrates the architecture behind AI workflow orchestration systems and agent collaboration pipelines.
+The default log is `multi-agent-orchestrator/.local/output_log.json`. Each run resets memory; callers receive copies to avoid accidental state mutation. This demonstration uses process-global memory and is not a concurrent service.
+
+The tracked `tasks.json` and `output_log.json` are examples. They are not runtime configuration or output destinations. A useful next contribution would be a small registry of explicitly allowed actions with real results, clear errors, and tests.

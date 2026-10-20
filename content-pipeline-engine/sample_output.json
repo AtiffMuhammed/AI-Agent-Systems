@@ -1,24 +1,24 @@
 {
-  "video": "finance_short.mp4",
+  "video": "ESP32_workflow_demo.mp4",
   "metadata": {
-    "title": "AI Optimized: finance_short.mp4",
-    "description": "Automated metadata generated for finance_short.mp4",
-    "category": "AI Automation",
-    "language": "English"
+    "title": "ESP32 workflow demo",
+    "description": "Draft description for ESP32 workflow demo.",
+    "category": "Video",
+    "language": "English",
+    "source": "filename-template"
   },
   "seo": {
-    "seo_title": "🔥 AI Optimized: finance_short.mp4 | AI Automation",
+    "seo_title": "ESP32 workflow demo",
     "hashtags": [
-      "#AI",
-      "#Automation",
-      "#ContentCreation",
-      "#Shorts"
+      "#esp32",
+      "#workflow",
+      "#demo"
     ],
     "keywords": [
-      "AI automation",
-      "content pipeline",
-      "YouTube shorts",
-      "AI workflow"
-    ]
+      "esp32",
+      "workflow",
+      "demo"
+    ],
+    "needs_editorial_review": true
   }
 }

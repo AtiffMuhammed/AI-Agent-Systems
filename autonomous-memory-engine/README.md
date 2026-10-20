@@ -1,40 +1,15 @@
-# 🧠 Autonomous Memory Engine
+# Memory engine
 
-A modular AI memory framework designed for agentic systems and workflow orchestration.
+A single-process JSON store with case-insensitive substring retrieval and formatted context.
 
-## 🚀 Overview
-This project simulates how modern AI agents store, retrieve, and reuse contextual information.
-
-Architecture:
-
-Input → Memory Storage → Retrieval Engine → Context Injection → Agent Response
-
-## ⚙️ Features
-- Persistent memory simulation
-- Context retrieval pipeline
-- JSON-based storage
-- Modular architecture
-- Agent-ready integration
-- Lightweight memory indexing
-
-## 📁 Structure
-
-```text
-autonomous-memory-engine/
- ├── main.py
- ├── memory_store.py
- ├── retrieval_engine.py
- ├── context_injector.py
- ├── memories.json
- └── example_output.json
+```bash
+python autonomous-memory-engine/main.py --add "Built an ESP32 monitor" --query esp32
+python autonomous-memory-engine/main.py --query monitor
+python autonomous-memory-engine/main.py --query esp32 --store /path/to/memories.json
 ```
 
-## 🎯 Purpose
-This project demonstrates the core concepts behind AI memory systems used in autonomous agents and multi-agent workflows.
+Run from the repository root. The default store is `autonomous-memory-engine/.local/memories.json`. It is created on the first write and is ignored by Git. A missing store is empty; invalid JSON or a value other than a list of strings raises an error. Existing corrupt files are preserved. Writes use a temporary file and atomic replacement; duplicate text is not appended.
 
-## 🔥 Future Improvements
-- Vector database integration
-- Embedding-based retrieval
-- Semantic search
-- Long-term memory persistence
-- Multi-agent shared memory
+`save_memory(text, path=None)` returns whether a value was added. `load_memories(path=None)` reads validated records. `retrieve_memories(query, path=None)` performs a substring search.
+
+This does not use embeddings, semantic search, encryption, or concurrent-write locking. Treat memories as local plaintext. The tracked `memories.json` is a legacy empty example, not the new default store; migrate an existing file with `--store` if needed.

@@ -1,8 +1,7 @@
 {
-  "query": "AI automation",
+  "query": "esp32",
   "retrieved_memories": [
-    "Built AI workflow automation system",
-    "Testing multi-agent orchestration"
+    "Built an ESP32 monitor"
   ],
-  "context": "Relevant memories injected successfully"
+  "context": "Query: esp32\n\nRelevant Memories:\n- Built an ESP32 monitor\n"
 }
