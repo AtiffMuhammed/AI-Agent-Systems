@@ -99,3 +99,10 @@ class EngineTests(unittest.TestCase):
         self.store.import_document(self.project,'code.md','```\nbattery\n```')
         report = markdown_report(answer(self.store,self.project,'battery'))
         self.assertIn('````text',report)
+
+    def test_export_escapes_links_and_html_in_untrusted_suggestions(self):
+        model = lambda *a:{'insufficient_evidence':False,'claims':[{'text':'30 seconds','sources':['S1']}],
+                          'next_steps':['![image](https://example.com/track) <script>bad</script>']}
+        report = markdown_report(answer(self.store,self.project,'temperature','ollama',model))
+        self.assertIn(r'\!\[image\]\(https://example.com/track\)',report)
+        self.assertIn(r'\<script\>',report)

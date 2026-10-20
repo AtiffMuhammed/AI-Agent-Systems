@@ -71,6 +71,8 @@ def make_server(store, port=8765):
                 self.send_body({'error':'Requested project, source, report, or task was not found.'},404)
             except (ValueError,TypeError) as error:
                 self.send_body({'error':str(error) if isinstance(error,ValueError) else 'Invalid request fields.'},400)
+            except RecursionError:
+                self.send_body({'error':'JSON nesting is too deep.'},400)
             except (BrokenPipeError,ConnectionResetError,TimeoutError):
                 pass
             except sqlite3.Error:

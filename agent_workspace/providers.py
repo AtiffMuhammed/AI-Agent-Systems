@@ -29,6 +29,7 @@ class ProviderError(Exception):
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
     def redirect_request(self, req, fp, code, msg, headers, newurl):
+        fp.close()
         raise ProviderError('Provider redirect refused. Check the provider configuration.')
 
 
@@ -54,8 +55,10 @@ def post_json(url, payload, headers):
                 raise ProviderError('Provider response exceeded the size limit.')
             return json.loads(data.decode('utf-8'))
     except urllib.error.HTTPError as error:
-        raise ProviderError(f'Provider returned HTTP {error.code}; check the selected model and server configuration.') from None
-    except (OSError, ValueError, UnicodeError) as error:
+        code = error.code
+        error.close()
+        raise ProviderError(f'Provider returned HTTP {code}; check the selected model and server configuration.') from None
+    except (OSError, ValueError, UnicodeError, RecursionError):
         raise ProviderError('Provider is unavailable or returned invalid JSON. Check the local model service or API configuration.') from None
 
 
@@ -86,5 +89,5 @@ def generate(provider, question, sources):
             raise ProviderError('OpenRouter returned an unexpected message format.') from None
     try:
         return json.loads(content)
-    except (ValueError,TypeError):
+    except (ValueError,TypeError,RecursionError):
         raise ProviderError('The model did not return a JSON object.') from None

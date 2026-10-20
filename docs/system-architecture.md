@@ -1,20 +1,45 @@
-# Architecture and next steps
+# V3 architecture
 
-These three examples are independent scripts, not an integrated production platform.
+The product is a local project workspace, implemented in Python's standard library with static HTML/CSS/JavaScript. Its stages are ordinary, inspectable functions; they are not a team of autonomous agents or separately trained models.
 
-| Module | Input | Processing | Output |
-| --- | --- | --- | --- |
-| Memory | Text and query | Validate, atomically persist, substring-match | JSON with retrieved text and context |
-| Orchestrator | Goal text | Fixed planner and simulated task statuses | JSON run log |
-| Content | Filename | Template title and word-based tags | Editable JSON metadata |
+```mermaid
+flowchart TD
+  Files["Project notes and code"] --> Import["Validate and import"]
+  Import --> DB["SQLite projects and source chunks"]
+  Q["Standalone question"] --> Search["Project-scoped FTS5 search"]
+  DB --> Search
+  Search --> Evidence["Source excerpts"]
+  Search --> Model["Optional model synthesis"]
+  Model --> Check["Validate claim references"]
+  Check --> Report["Saved report and evidence snapshots"]
+  Check -->|"Invalid response"| Evidence
+  Evidence --> Report
+  Report --> Export["Markdown or JSON"]
+  Report --> Suggest["Suggested next steps"]
+  Suggest -->|"User adds task"| Tasks["Persistent task board"]
+```
 
-All use the standard library and have no network dependencies. Each example has an importable function and an argparse CLI. Generated state goes under ignored `.local/` directories. Tests run the CLIs from an unrelated working directory.
+## Modules
 
-## Candidate contributions
+| Module | Responsibility |
+| --- | --- |
+| `store.py` | Transactions, project separation, document hashes, line-preserving chunks, BM25 retrieval, saved reports and tasks |
+| `providers.py` | Fixed local Ollama/cloud OpenRouter destinations, bounded HTTP/JSON handling, server-side credentials |
+| `engine.py` | Excerpts or structured synthesis, source-ID validation, TODO suggestions, visible fallbacks, Markdown exports |
+| `server.py` | Loopback HTTP API, input limits, Host/Origin/session checks, static assets |
+| `cli.py` | Local server, project creation, bounded folder imports, terminal questions/reports |
+| `static/` | Import, ask, evidence inspection, tasks, history, export UI |
 
-1. Memory: add a SQLite implementation and tests for concurrent writes and migrations.
-2. Orchestrator: register a few safe Python functions as real tasks, then represent real success/failure and bounded retries.
-3. Content: accept a batch CSV, validate rows, and produce per-item drafts.
-4. Optional model adapter: add explicit opt-in configuration, timeouts, mocked tests, and transparent cost/error handling.
+The model receives only the question and retrieved passages. It cannot run commands, read arbitrary paths, publish content, or mutate task statuses. Database writes are performed by explicit application endpoints. The task board is a human workflow, not proof that any described real-world work happened.
 
-These are planned features, not claims about the current implementation. Any time-based program submission should describe the work actually completed by the participant.
+## Storage and retrieval
+
+Documents are unique by project and filename. Content hashes detect unchanged imports. Reindexing removes old chunks and inserts replacements in one transaction, with FTS entries updated by triggers. Search tokenizes the query, quotes individual terms to avoid interpreting FTS syntax, and uses OR matching with BM25 ranking. Overlapping passages are deduplicated before at most six are selected.
+
+Saved reports retain the original selected text and document digest. Live sources can change independently. Removing source content from history requires clearing reports as well as deleting the source; external backups remain outside the app's control.
+
+The database schema is version 1. There is no automatic migration from the legacy JSON examples; import the notes you want to use. The legacy example modules remain separate, documented learning examples and are not on the V3 request path.
+
+## Future work justified by observed use
+
+Prioritize real model evaluation and usability checks, then address repeatedly observed retrieval failures. PDF parsing or embeddings should be added only with format-specific tests and useful examples. A public deployment would require a different server/authentication design; the loopback app should remain local.

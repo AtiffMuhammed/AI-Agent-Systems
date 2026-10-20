@@ -100,9 +100,14 @@ def answer(store, project, question, provider='evidence', generator=None):
     return store.save_run(project,result)
 
 
+def markdown_inline(value):
+    """Keep untrusted labels and suggestions from creating links or HTML."""
+    return re.sub(r'([\\`*_{}\[\]()<>!#|])',r'\\\1',str(value).replace('\n',' ').replace('\r',' '))
+
+
 def markdown_report(run):
     data = run['result']
-    lines = ['# Project evidence report', '',f'Question: {data["question"]}', '',
+    lines = ['# Project evidence report', '',f'Question: {markdown_inline(data["question"])}', '',
              f'Created (UTC): {run["created"]}', f'Mode: {data["mode"]} | Status: {data["status"]}', '']
     if data['mode'] == 'evidence':
         lines.extend(['These are retrieved excerpts, not an AI-generated answer.', ''])
@@ -115,13 +120,13 @@ def markdown_report(run):
         lines.extend([f'{refs}', fence+'text', claim['text'], fence, ''])
     if data['next_steps']:
         lines.extend(['## Suggested next steps (not executed)', ''])
-        lines.extend('- ' + step.replace('\n',' ') for step in data['next_steps'])
+        lines.extend('- ' + markdown_inline(step) for step in data['next_steps'])
         lines.append('')
     lines.extend(['## Evidence snapshots', ''])
     for source in data['sources']:
         body = source['body']
         fence = '`' * max(3,max((len(m[0]) for m in re.finditer(r'`+',body)),default=0)+1)
-        lines.extend([f'### [{source["source_id"]}] {source["name"]} — lines {source["start_line"]}–{source["end_line"]}',
+        lines.extend([f'### [{source["source_id"]}] {markdown_inline(source["name"])} — lines {source["start_line"]}–{source["end_line"]}',
                       f'SHA-256: {source["digest"]}', '',fence+'text',body,fence,''])
     if data['warnings']:
         lines.extend(['## Warnings', '', *data['warnings'], ''])

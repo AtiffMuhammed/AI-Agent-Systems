@@ -86,7 +86,8 @@ class HttpTests(unittest.TestCase):
         self.assertEqual(self.request('/api/projects',{'name':[]})[0],400)
         self.assertEqual(self.request('/api/projects',b'[]',raw=True)[0],400)
         self.assertEqual(self.request('/api/projects',{'name':'x'},headers={'Content-Type':'text/plain'})[0],415)
-        self.assertEqual(self.request('/api/projects',b'x'*2_100_001,raw=True)[0],413)
+        # Reject from declared length without racing a client still writing 2 MB.
+        self.assertEqual(self.request('/api/projects',b'{}',headers={'Content-Length':'2100001'},raw=True)[0],413)
 
     def test_cloud_synthesis_requires_per_request_consent(self):
         project = self.project()

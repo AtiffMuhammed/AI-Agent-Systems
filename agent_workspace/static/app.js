@@ -58,7 +58,7 @@ function renderTasks() {
       const li=node('li'); li.append(node('p',task.title)); const controls=node('div',undefined,'task-controls'); const select=node('select');
       select.setAttribute('aria-label',`Status for ${task.title}`);
       for(const [value,label] of [['todo','To do'],['doing','In progress'],['done','Done']]) {const option=node('option',label);option.value=value;select.append(option);}
-      select.value=task.status; select.addEventListener('change',()=>work(async()=>{await api('/api/task-status',{project,id:task.id,status:select.value});await refresh();notice('Task status saved.');}));
+      select.value=task.status; select.addEventListener('change',()=>work(async()=>{try{await api('/api/task-status',{project,id:task.id,status:select.value});await refresh();notice('Task status saved.');}catch(error){select.value=task.status;throw error;}}));
       const remove=button('×',()=>{if(confirm(`Delete task “${task.title}”?`))work(async()=>{await api('/api/delete-task',{project,id:task.id});await refresh();notice('Task deleted.');});});
       remove.setAttribute('aria-label',`Delete task ${task.title}`); controls.append(select,remove);li.append(controls);list.append(li);
     }
@@ -93,7 +93,7 @@ for(const [index,name] of ['ask','tasks','history'].entries()){
   $(name+'-tab').addEventListener('click',()=>showTab(name));
   $(name+'-tab').addEventListener('keydown',event=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(event.key)){event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?2:(index+(event.key==='ArrowRight'?1:2))%3;showTab(['ask','tasks','history'][next],true);}});
 }
-$('project').addEventListener('change',()=>work(async()=>{resetReport();await refresh($('project').value);notice();}));
+$('project').addEventListener('change',()=>work(async()=>{try{resetReport();await refresh($('project').value);notice();}catch(error){$('project').value=project;throw error;}}));
 $('project-form').addEventListener('submit',event=>{event.preventDefault();work(async()=>{const created=await api('/api/projects',{name:$('project-name').value});$('project-name').value='';resetReport();await refresh(created.id);notice('Project created. Import its notes to begin.');});});
 $('sample').addEventListener('click',()=>work(async()=>{const sample=await api('/api/sample',{});resetReport();await refresh(sample.id);$('question').value='How often does the firmware sample soil moisture?';$('provider').value='evidence';updateMode();showTab('ask');notice('Fictional sample loaded. Click “Find an answer” to inspect its source evidence.');}));
 $('files').addEventListener('change',()=>work(async()=>{
