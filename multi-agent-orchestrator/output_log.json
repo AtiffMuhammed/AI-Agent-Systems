@@ -1,3 +1,33 @@
 {
-  "status": "waiting for execution"
+  "mode": "simulation",
+  "goal": "Review a workflow",
+  "tasks": [
+    {
+      "task": "Analyze goal: Review a workflow",
+      "status": "simulated"
+    },
+    {
+      "task": "Generate execution strategy",
+      "status": "simulated"
+    },
+    {
+      "task": "Execute workflow",
+      "status": "simulated"
+    },
+    {
+      "task": "Store results",
+      "status": "simulated"
+    }
+  ],
+  "memory": [
+    {
+      "goal": "Review a workflow",
+      "tasks": [
+        "Analyze goal: Review a workflow",
+        "Generate execution strategy",
+        "Execute workflow",
+        "Store results"
+      ]
+    }
+  ]
 }

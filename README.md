@@ -1,65 +1,47 @@
-# 🚀 AI Agent Systems
+# AI Agent Systems
 
-Building modular AI automation systems, multi-agent workflows, memory engines, and intelligent content pipelines.
+**Small, runnable Python examples for learning memory, task planning, and content pipelines.**
 
-## 👋 About
-I’m Athif — a 16-year-old builder focused on:
-- AI Agents
-- Automation Systems
-- Python Development
-- AI Workflow Architecture
-- IoT + AI Integration
+[![Tests](https://github.com/AtiffMuhammed/AI-Agent-Systems/actions/workflows/tests.yml/badge.svg)](https://github.com/AtiffMuhammed/AI-Agent-Systems/actions/workflows/tests.yml)
 
----
+These are transparent learning prototypes. The current code uses Python's standard library: it does not call an LLM, generate videos, publish content, or execute the actions described in a plan.
 
-# 🧠 Core Systems
+## Run the examples
 
-## 🤖 AI Avatar News Automation Agent
-Transforms news into AI-generated short-form avatar videos.
+Requires Python 3.10+. Clone this repository and run from its root; no dependencies or API keys are needed.
 
-## ⚙️ Multi-Agent Orchestrator
-Coordinates autonomous task execution pipelines.
+| Example | What it actually does |
+| --- | --- |
+| [Memory engine](autonomous-memory-engine/) | Stores text in JSON, retrieves case-insensitive substring matches, formats context |
+| [Orchestrator](multi-agent-orchestrator/) | Builds a fixed task plan, simulates execution, and saves a per-run JSON log |
+| [Content pipeline](content-pipeline-engine/) | Drafts editable titles, keywords, and hashtags from a filename |
 
-## 🧠 Autonomous Memory Engine
-Stores and retrieves contextual workflow memory.
+```bash
+python autonomous-memory-engine/main.py --add "Building n8n workflows" --query n8n
+python multi-agent-orchestrator/main.py "Review my automation workflow"
+python content-pipeline-engine/main.py "ESP32_workflow_demo.mp4"
+```
 
-## 🚀 Content Pipeline Engine
-Processes metadata, SEO optimization, and content packaging.
+Every command prints JSON. Generated files go into an ignored `.local/` directory beside the relevant script, independently of your current working directory. Use `--store` for a custom memory file or `--output` for a custom log/content package.
 
----
+## Reliability details
 
-# 🏗️ Architecture Philosophy
+- Memory writes use atomic replacement. Invalid existing data raises an error instead of being silently overwritten.
+- Blank inputs are rejected; duplicate memories are not added twice.
+- Orchestrator tasks are explicitly marked `simulated`. Each run starts with isolated process-local history.
+- Metadata is a filename template, not media analysis or a claim of search-ranking performance.
+- The scripts make no network calls. The legacy `.env.example` is not loaded by these examples.
 
-This repository focuses on:
-- Agent collaboration
-- Workflow orchestration
-- Persistent memory systems
-- Scalable automation pipelines
-- Modular AI architecture
+The memory store is intended for a single process. Atomic replacement avoids partial writes, but does not prevent concurrent writers from losing updates. Use a transactional database before multi-user deployment.
 
----
+## Development
 
-# ⚡ Tech Stack
-- Python
-- n8n
-- OpenRouter
-- HeyGen API
-- Workflow Automation
-- AI Content Pipelines
+```bash
+python -m unittest discover -s tests -v
+```
 
----
+Tests cover corrupt-file preservation, interrupted writes, Unicode retrieval, run isolation, and all three command-line demos. CI is configured for Python 3.10, 3.12, and 3.14.
 
-# 📈 Future Expansion
-- Vector databases
-- Autonomous planning systems
-- Multi-platform publishing
-- Distributed AI workflows
-- Agent-to-agent communication
+See [architecture and next steps](docs/system-architecture.md), [contributing](CONTRIBUTING.md), and [AI assistance disclosure](AI_ASSISTANCE.md).
 
----
-
-# 🔥 Philosophy
-
-Building systems, not scripts.
-
-Self-discipline over motivation.
+For a practical n8n utility, see [FlowCheck](https://github.com/AtiffMuhammed/Python-Automation-Lab), an offline workflow export checker.

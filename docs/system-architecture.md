@@ -1,56 +1,20 @@
-# 🏗️ AI Systems Architecture
+# Architecture and next steps
 
-## 🤖 Core Philosophy
+These three examples are independent scripts, not an integrated production platform.
 
-This repository focuses on modular AI systems rather than isolated scripts.
+| Module | Input | Processing | Output |
+| --- | --- | --- | --- |
+| Memory | Text and query | Validate, atomically persist, substring-match | JSON with retrieved text and context |
+| Orchestrator | Goal text | Fixed planner and simulated task statuses | JSON run log |
+| Content | Filename | Template title and word-based tags | Editable JSON metadata |
 
-The projects are designed around:
-- Agent collaboration
-- Workflow orchestration
-- Memory persistence
-- Automation pipelines
-- Scalable architecture
+All use the standard library and have no network dependencies. Each example has an importable function and an argparse CLI. Generated state goes under ignored `.local/` directories. Tests run the CLIs from an unrelated working directory.
 
----
+## Candidate contributions
 
-# 🔄 System Flow
+1. Memory: add a SQLite implementation and tests for concurrent writes and migrations.
+2. Orchestrator: register a few safe Python functions as real tasks, then represent real success/failure and bounded retries.
+3. Content: accept a batch CSV, validate rows, and produce per-item drafts.
+4. Optional model adapter: add explicit opt-in configuration, timeouts, mocked tests, and transparent cost/error handling.
 
-```text
-Input Sources
-    ↓
-AI Agents
-    ↓
-Task Orchestration
-    ↓
-Memory + Context
-    ↓
-Content Processing
-    ↓
-Output Pipelines
-```
-
----
-
-# 🧠 Modules
-
-## 1. AI Avatar News Agent
-Transforms news into short-form AI avatar videos.
-
-## 2. Multi-Agent Orchestrator
-Coordinates autonomous task execution.
-
-## 3. Autonomous Memory Engine
-Stores and retrieves contextual workflow memories.
-
-## 4. Content Pipeline Engine
-Processes metadata and SEO optimization workflows.
-
----
-
-# 🚀 Future Expansion
-
-- Vector memory systems
-- Agent-to-agent communication
-- Autonomous planning systems
-- Multi-platform automation
-- Distributed AI workflows
+These are planned features, not claims about the current implementation. Any time-based program submission should describe the work actually completed by the participant.

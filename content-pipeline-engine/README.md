@@ -1,35 +1,12 @@
-# 🚀 Content Pipeline Engine
+# Content metadata draft
 
-An AI-ready modular pipeline for processing short-form video metadata and automation workflows.
+Generate an editable draft from a filename without opening the video.
 
-## 🧠 Purpose
-This module simulates a scalable AI-powered content automation workflow.
-
-Pipeline:
-
-Video Input → Metadata Extraction → SEO Optimization → Output Packaging
-
-## ⚙️ Features
-- Automated metadata generation
-- SEO title generation
-- Smart hashtag generation
-- JSON export pipeline
-- Batch processing structure
-- AI-ready workflow architecture
-
-## 📁 Structure
-
-```text
-content-pipeline-engine/
- ├── main.py
- ├── seo_generator.py
- ├── metadata_processor.py
- ├── requirements.txt
- └── sample_output.json
+```bash
+python content-pipeline-engine/main.py "ESP32_workflow_demo.mp4"
+python content-pipeline-engine/main.py "ESP32_workflow_demo.mp4" --output /path/to/draft.json
 ```
 
-## 🔥 Future Improvements
-- AI caption rewriting
-- Multi-language support
-- YouTube upload integration
-- Multi-agent orchestration
+The filename stem becomes a title; simple word extraction produces candidate hashtags and keywords. Output includes `source: "filename-template"` and `needs_editorial_review: true`.
+
+The default output is `content-pipeline-engine/.local/content-package.json`. The tracked sample is not overwritten. This does not inspect video/audio, use AI, guarantee SEO performance, or upload anything. Review all suggestions before publishing. A practical next step is a batch CSV input with per-row validation and tests.
