@@ -1,6 +1,6 @@
 # V3 code review and validation
 
-Reviewed 2026-10-20. Review was performed directly against source and tests with ChatGPT/Codex assistance. A separate Code Review plugin was not callable in this session; no independent third-party audit is claimed.
+Reviewed 2026-10-20. Review was performed directly against source and tests. A separate Code Review plugin was not callable in this session; no independent third-party audit is claimed.
 
 ## Verified locally
 

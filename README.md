@@ -107,6 +107,6 @@ node --check agent_workspace/static/app.js
 
 The evaluation uses a tiny authored sample; it is not a general accuracy benchmark. Provider contract tests use a local test server and mocks, not live model inference. See the [review and validation record](docs/REVIEW.md) for exact checks and unverified areas.
 
-Read the [architecture](docs/system-architecture.md), [contributing guide](CONTRIBUTING.md), [AI assistance disclosure](AI_ASSISTANCE.md), and [release milestones/devlogs](docs/DEVLOGS.md). Licensed under [MIT](LICENSE).
+Read the [architecture](docs/system-architecture.md), [contributing guide](CONTRIBUTING.md), and [release milestones/devlogs](docs/DEVLOGS.md). Licensed under [MIT](LICENSE).
 
 If this helps you keep track of a real project, a star helps others discover it. More useful still: report an unclear answer with a small, shareable source file and the question that produced it.

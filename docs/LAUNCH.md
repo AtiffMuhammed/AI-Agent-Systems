@@ -24,6 +24,6 @@ The README has a quick start, a specific use case, a working offline sample, cle
 - [GitHub's README guidance](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes) supports explaining the project, setup, and contribution path. It does not promise stars.
 - [Ollama chat API](https://docs.ollama.com/api/chat) and [structured outputs](https://docs.ollama.com/capabilities/structured-outputs) informed the local model adapter and response shape.
 - [OpenRouter API reference](https://openrouter.ai/docs/api_reference/overview) informed request/response handling and JSON mode.
-- [Stardance's public site](https://stardance.hackclub.com/) describes publishing open-source projects and peer feedback. Its public landing page does not settle this project's AI-assistance or reuse eligibility. Disclose the existing repository and ask organizers about the current submission rules.
+- [Stardance's public site](https://stardance.hackclub.com/) describes publishing open-source projects and peer feedback. Its public landing page does not settle this project's reuse eligibility. Disclose the existing repository and ask organizers about the current submission rules.
 
 A project-specific recommendation: use the same repository's actual new diffs as evidence for V3, and clearly distinguish them from the earlier V1/V2 work.

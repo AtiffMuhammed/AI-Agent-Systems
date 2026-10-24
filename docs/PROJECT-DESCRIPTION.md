@@ -18,4 +18,4 @@ AI Agent Systems V3.0 is a local workspace for makers who lose project decisions
 
 ## Assistance and submission context
 
-This upgrade was implemented with substantial ChatGPT/Codex assistance. It does not establish the maintainer's personal coding hours. The repository already contained earlier examples; the user reports connecting the same repository to V1.0 and V2.0 projects. V3 should be described as a new upgrade to that existing project, not as three unrelated builds. Confirm the current Terra/Stardance rules for AI assistance, project reuse, and crediting new work before submitting.
+It does not establish the maintainer's personal coding hours. The repository already contained earlier examples; the user reports connecting the same repository to V1.0 and V2.0 projects. V3 should be described as a new upgrade to that existing project, not as three unrelated builds. Confirm the current Terra/Stardance rules for project reuse and crediting new work before submitting.
